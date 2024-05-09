@@ -22,13 +22,52 @@ int main() {
     numberOfColumns = 10;   
     
     allocateMemory();
+    readFileForGameMap(file);   
+    do
+    {           
 
-    readFileForGameMap(file);
+        for(int i = 0; i <= numberOfLines; i++) {
+            printf("%s\n", gameMap[i]);
+        }
+        char direction;
+        scanf(" %c", &direction);
+        move(direction);
+    
+    } while (!endOfGame());
+    
 
-    fclose(file);
-    for(int i = 0; i <= numberOfLines; i++) {
-        printf("%s\n", gameMap[i]);
+   
+}
+
+void move(char direction) {
+    int x;
+    int y;
+
+    for (int i = 0; i <= numberOfLines; i++) {
+        for (int j = 0; j <= numberOfColumns; j++) {
+            if (gameMap[i][j] == '@') {
+                x = i;
+                y = j;
+            }
+        }        
     }
+
+    switch(direction) {
+        case 'a':
+            gameMap[x][y-1] = '@';
+            break;
+        case 'w':
+            gameMap[x-1][y] = '@';
+            break;
+        case 's':
+            gameMap[x+1][y] = '@';
+            break;
+        case 'd':
+            gameMap[x][y+1] = '@';
+            break;
+    }
+
+    gameMap[x][y] = '.';
 }
 
 void allocateMemory() {
@@ -42,11 +81,17 @@ void allocateMemory() {
     }
 }
 
+int endOfGame() {
+    return 0;
+}
+
 void readFileForGameMap(FILE* file) {    
 
     for(int i = 0; i <= numberOfLines; i++) {
         fscanf(file, "%s", gameMap[i]);
     }   
+
+    fclose(file);   
 }
 
 int countLines(FILE* fp) { 
