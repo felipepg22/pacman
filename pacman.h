@@ -1,0 +1,2 @@
+void readFileForGameMap();
+void allocateMemory();
