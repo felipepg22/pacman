@@ -5,9 +5,7 @@
 #include "pacman.h"
 #include "file-helper.h"
 
-char** gameMap;
-int numberOfLines;
-int numberOfColumns;
+struct map gameMap;
 
 int main() {   
 
@@ -18,16 +16,16 @@ int main() {
         exit(1);
     }    
 
-    numberOfLines = countLines(file);    
-    numberOfColumns = 10;   
+    gameMap.lines = countLines(file);    
+    gameMap.columns = 10;   
     
     allocateMemory();
     readFileForGameMap(file);   
     do
     {           
 
-        for(int i = 0; i <= numberOfLines; i++) {
-            printf("%s\n", gameMap[i]);
+        for(int i = 0; i <= gameMap.lines; i++) {
+            printf("%s\n", gameMap.matrix[i]);
         }
         char direction;
         scanf(" %c", &direction);
@@ -43,9 +41,9 @@ void move(char direction) {
     int x;
     int y;
 
-    for (int i = 0; i <= numberOfLines; i++) {
-        for (int j = 0; j <= numberOfColumns; j++) {
-            if (gameMap[i][j] == '@') {
+    for (int i = 0; i <= gameMap.lines; i++) {
+        for (int j = 0; j <= gameMap.columns; j++) {
+            if (gameMap.matrix[i][j] == '@') {
                 x = i;
                 y = j;
             }
@@ -54,30 +52,30 @@ void move(char direction) {
 
     switch(direction) {
         case 'a':
-            gameMap[x][y-1] = '@';
+            gameMap.matrix[x][y-1] = '@';
             break;
         case 'w':
-            gameMap[x-1][y] = '@';
+            gameMap.matrix[x-1][y] = '@';
             break;
         case 's':
-            gameMap[x+1][y] = '@';
+            gameMap.matrix[x+1][y] = '@';
             break;
         case 'd':
-            gameMap[x][y+1] = '@';
+            gameMap.matrix[x][y+1] = '@';
             break;
     }
 
-    gameMap[x][y] = '.';
+    gameMap.matrix[x][y] = '.';
 }
 
 void allocateMemory() {
-    int memoryToAllocForLines = sizeof(int*) * numberOfLines;
-    int memoryToAllocForColumns = sizeof(int) * numberOfColumns;
+    int memoryToAllocForLines = sizeof(int*) * gameMap.lines;
+    int memoryToAllocForColumns = sizeof(int) * gameMap.columns;
 
-    gameMap = malloc(memoryToAllocForLines);
+    gameMap.matrix = malloc(memoryToAllocForLines);
 
-    for(int i = 0; i <= numberOfLines; i ++) {
-        gameMap[i] = malloc(memoryToAllocForColumns);
+    for(int i = 0; i <= gameMap.lines; i ++) {
+        gameMap.matrix[i] = malloc(memoryToAllocForColumns);
     }
 }
 
@@ -87,8 +85,8 @@ int endOfGame() {
 
 void readFileForGameMap(FILE* file) {    
 
-    for(int i = 0; i <= numberOfLines; i++) {
-        fscanf(file, "%s", gameMap[i]);
+    for(int i = 0; i <= gameMap.lines; i++) {
+        fscanf(file, "%s", gameMap.matrix[i]);
     }   
 
     fclose(file);   
