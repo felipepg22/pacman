@@ -4,8 +4,14 @@ struct map {
     int columns;
 };
 
-typedef struct map MAP;
+struct position {
+    int x;
+    int y;
+};
 
+typedef struct map MAP;
+typedef struct position POSITION;
 
 void allocateMemory(MAP* map);
-void move(MAP* map, char direction);
+void move(MAP* map, POSITION* position, char direction);
+void find(MAP* map, POSITION* position, char character);

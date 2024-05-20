@@ -14,33 +14,40 @@ void allocateMemory(MAP* map) {
     }
 }
 
-void move(MAP* map, char direction) {
-    int x;
-    int y;
+void move(MAP* map, POSITION* position, char direction) {
 
-    for (int i = 0; i <= map->lines; i++) {
-        for (int j = 0; j <= map->columns; j++) {
-            if (map->matrix[i][j] == '@') {
-                x = i;
-                y = j;
-            }
-        }        
-    }
+    map->matrix[position->x][position->y] = '.';
 
     switch(direction) {
         case 'a':
-            map->matrix[x][y-1] = '@';
+            map->matrix[position->x][position->y-1] = '@';
+            position->y--;
             break;
         case 'w':
-            map->matrix[x-1][y] = '@';
+            map->matrix[position->x-1][position->y] = '@';
+            position->x--;
             break;
         case 's':
-            map->matrix[x+1][y] = '@';
+            map->matrix[position->x+1][position->y] = '@';
+            position->x++;
             break;
         case 'd':
-            map->matrix[x][y+1] = '@';
+            map->matrix[position->x][position->y+1] = '@';
+            position->y++;
             break;
     }
 
-    map->matrix[x][y] = '.';
+    
+}
+
+void find(MAP* map, POSITION* position, char character) {
+    for (int i = 0; i <= map->lines; i++) {
+        for (int j = 0; j <= map->columns; j++) {
+            if (map->matrix[i][j] == character) {
+                position->x = i;
+                position->y = j;
+                break;
+            }
+        }        
+    }
 }

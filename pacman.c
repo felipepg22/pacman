@@ -7,10 +7,11 @@
 #include "map.h"
 
 MAP gameMap;
+POSITION hero;
 
 int main() {   
 
-    FILE* file = fopen("mapa.txt", "r");
+    FILE* file = fopen("mapa.txt", "r");    
 
     if (file == 0) {
         printf("Failed to read file for gameMap");
@@ -22,16 +23,18 @@ int main() {
     
     allocateMemory(&gameMap);
     readFileForGameMap(file);   
+    find(&gameMap, &hero, '@');
+    
     do
     {           
 
         for(int i = 0; i <= gameMap.lines; i++) {
             printf("%s\n", gameMap.matrix[i]);
         }
-        
+
         char direction;
         scanf(" %c", &direction);
-        move(&gameMap, direction);
+        move(&gameMap, &hero, direction);
     
     } while (!endOfGame());
 }
