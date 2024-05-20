@@ -4,6 +4,7 @@
 #include <string.h>
 #include "pacman.h"
 #include "file-helper.h"
+#include "map.h"
 
 MAP gameMap;
 
@@ -19,7 +20,7 @@ int main() {
     gameMap.lines = countLines(file);    
     gameMap.columns = 10;   
     
-    allocateMemory();
+    allocateMemory(&gameMap);
     readFileForGameMap(file);   
     do
     {           
@@ -27,56 +28,12 @@ int main() {
         for(int i = 0; i <= gameMap.lines; i++) {
             printf("%s\n", gameMap.matrix[i]);
         }
+        
         char direction;
         scanf(" %c", &direction);
-        move(direction);
+        move(&gameMap, direction);
     
     } while (!endOfGame());
-    
-
-   
-}
-
-void move(char direction) {
-    int x;
-    int y;
-
-    for (int i = 0; i <= gameMap.lines; i++) {
-        for (int j = 0; j <= gameMap.columns; j++) {
-            if (gameMap.matrix[i][j] == '@') {
-                x = i;
-                y = j;
-            }
-        }        
-    }
-
-    switch(direction) {
-        case 'a':
-            gameMap.matrix[x][y-1] = '@';
-            break;
-        case 'w':
-            gameMap.matrix[x-1][y] = '@';
-            break;
-        case 's':
-            gameMap.matrix[x+1][y] = '@';
-            break;
-        case 'd':
-            gameMap.matrix[x][y+1] = '@';
-            break;
-    }
-
-    gameMap.matrix[x][y] = '.';
-}
-
-void allocateMemory() {
-    int memoryToAllocForLines = sizeof(int*) * gameMap.lines;
-    int memoryToAllocForColumns = sizeof(int) * gameMap.columns;
-
-    gameMap.matrix = malloc(memoryToAllocForLines);
-
-    for(int i = 0; i <= gameMap.lines; i ++) {
-        gameMap.matrix[i] = malloc(memoryToAllocForColumns);
-    }
 }
 
 int endOfGame() {
