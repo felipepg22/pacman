@@ -5,7 +5,7 @@
 #include "pacman.h"
 #include "file-helper.h"
 
-struct map gameMap;
+MAP gameMap;
 
 int main() {   
 
