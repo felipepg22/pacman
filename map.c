@@ -20,28 +20,33 @@ void move(MAP* map, POSITION* position, char direction) {
 
     if (!isValueInArray(direction, validLetters, 4)) return;
 
-    map->matrix[position->x][position->y] = '.';
+    int nextX = position->x;
+    int nextY = position->y;
 
     switch(direction) {
         case 'a':
-            map->matrix[position->x][position->y-1] = '@';
-            position->y--;
+            nextY--;
             break;
         case 'w':
-            map->matrix[position->x-1][position->y] = '@';
-            position->x--;
+            nextX--;
             break;
         case 's':
-            map->matrix[position->x+1][position->y] = '@';
-            position->x++;
+            nextX++;
             break;
         case 'd':
-            map->matrix[position->x][position->y+1] = '@';
-            position->y++;
+            nextY++;
             break;
     }
 
-    
+    if (nextX >= map->lines || nextY >= map->columns) return;
+
+    if (map->matrix[nextX][nextY] != '.') return;
+
+    map->matrix[position->x][position->y] = '.';
+    map->matrix[nextX][nextY] = '@';
+
+    position->x = nextX;
+    position->y = nextY;
 }
 
 void find(MAP* map, POSITION* position, char character) {
