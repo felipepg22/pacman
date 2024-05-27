@@ -16,6 +16,10 @@ void allocateMemory(MAP* map) {
 
 void move(MAP* map, POSITION* position, char direction) {
 
+    char validLetters[4] = {'w', 'a', 's', 'd'};
+
+    if (!isValueInArray(direction, validLetters, 4)) return;
+
     map->matrix[position->x][position->y] = '.';
 
     switch(direction) {
@@ -50,4 +54,13 @@ void find(MAP* map, POSITION* position, char character) {
             }
         }        
     }
+}
+
+int isValueInArray(char c, char validLetters[], int arraySize) {
+    for (int i = 0; i < arraySize; i++) {
+        if (validLetters[i] == c) {
+            return 1;
+        }
+    }
+    return 0;
 }
