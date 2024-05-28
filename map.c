@@ -38,15 +38,26 @@ void move(MAP* map, POSITION* position, char direction) {
             break;
     }
 
-    if (nextX >= map->lines || nextY >= map->columns) return;
+    if(!isDirectionValid(map, nextX, nextY)) return;
 
-    if (map->matrix[nextX][nextY] != '.') return;
+    moveInMap(map, position, nextX, nextY);
+}
 
+void moveInMap(MAP *map, POSITION *position, int nextX, int nextY)
+{
     map->matrix[position->x][position->y] = '.';
     map->matrix[nextX][nextY] = '@';
 
     position->x = nextX;
     position->y = nextY;
+}
+
+int isDirectionValid(MAP* map, int x, int y) {
+  if (x >= map->lines || y >= map->columns || map->matrix[x][y] != '.') {
+    return 0;
+  }   
+
+  return 1;
 }
 
 void find(MAP* map, POSITION* position, char character) {
