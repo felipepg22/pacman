@@ -1,3 +1,5 @@
+#define EMPTY '.'
+
 struct map {
     char** matrix;
     int lines;

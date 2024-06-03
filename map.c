@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "map.h"
+#include "pacman.h"
 
 
 void allocateMemory(MAP* map) {
@@ -16,7 +17,7 @@ void allocateMemory(MAP* map) {
 
 void move(MAP* map, POSITION* position, char direction) {
 
-    char validLetters[4] = {'w', 'a', 's', 'd'};
+    char validLetters[4] = {UP, DOWN, RIGHT, LEFT};
 
     if (!isValueInArray(direction, validLetters, 4)) return;
 
@@ -24,16 +25,16 @@ void move(MAP* map, POSITION* position, char direction) {
     int nextY = position->y;
 
     switch(direction) {
-        case 'a':
+        case LEFT:
             nextY--;
             break;
-        case 'w':
+        case UP:
             nextX--;
             break;
-        case 's':
+        case DOWN:
             nextX++;
             break;
-        case 'd':
+        case RIGHT:
             nextY++;
             break;
     }
@@ -45,15 +46,15 @@ void move(MAP* map, POSITION* position, char direction) {
 
 void moveInMap(MAP *map, POSITION *position, int nextX, int nextY)
 {
-    map->matrix[position->x][position->y] = '.';
-    map->matrix[nextX][nextY] = '@';
+    map->matrix[position->x][position->y] = EMPTY;
+    map->matrix[nextX][nextY] = HERO;
 
     position->x = nextX;
     position->y = nextY;
 }
 
 int isDirectionValid(MAP* map, int x, int y) {
-  if (x >= map->lines || y >= map->columns || map->matrix[x][y] != '.') {
+  if (x >= map->lines || y >= map->columns || map->matrix[x][y] != EMPTY) {
     return 0;
   }   
 

@@ -23,7 +23,7 @@ int main() {
     
     allocateMemory(&gameMap);
     readFileForGameMap(file);   
-    find(&gameMap, &hero, '@');
+    find(&gameMap, &hero, HERO);
     
     do
     {           
