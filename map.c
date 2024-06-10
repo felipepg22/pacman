@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "map.h"
 #include "pacman.h"
 
@@ -41,16 +42,15 @@ void move(MAP* map, POSITION* position, char direction) {
 
     if(!isDirectionValid(map, nextX, nextY)) return;
 
-    moveInMap(map, position, nextX, nextY);
-}
-
-void moveInMap(MAP *map, POSITION *position, int nextX, int nextY)
-{
-    map->matrix[position->x][position->y] = EMPTY;
-    map->matrix[nextX][nextY] = HERO;
-
+    moveInMap(map, position->x, position->y, nextX, nextY);
     position->x = nextX;
     position->y = nextY;
+}
+
+void moveInMap(MAP *map, int originX, int originY, int nextX, int nextY) {
+    char character = map->matrix[originX][originY];
+	map->matrix[nextX][nextY] = character;
+	map->matrix[originX][originY] = EMPTY;
 }
 
 int isDirectionValid(MAP* map, int x, int y) {
@@ -80,4 +80,23 @@ int isValueInArray(char c, char validLetters[], int arraySize) {
         }
     }
     return 0;
+}
+
+void copyMap(MAP *origin, MAP *destination) {
+    destination->columns = origin->columns;
+    destination->lines = origin->lines;
+
+    allocateMemory(destination);
+    for (int i = 0; i < destination->lines; i++)
+    {
+        strcpy(origin->matrix[i], destination->matrix[i]);
+    }
+}
+
+void freeMemory(MAP* map) {
+	for(int i = 0; i < map->lines; i++) {
+		free(map->matrix[i]);
+	}
+
+	free(map->matrix);
 }

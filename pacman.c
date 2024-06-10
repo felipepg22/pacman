@@ -35,8 +35,11 @@ int main() {
         char direction;
         scanf(" %c", &direction);
         move(&gameMap, &hero, direction);
+        //enemies();
     
     } while (!endOfGame());
+
+    freeMemory(&gameMap);
 }
 
 int endOfGame() {
@@ -50,6 +53,26 @@ void readFileForGameMap(FILE* file) {
     }   
 
     fclose(file);   
+}
+
+void enemies() {
+    MAP copy;
+
+    copyMap(&gameMap, &copy);
+
+    for (int i = 0; i < copy.lines; i++)
+    {
+        for (int j = 0; j < copy.columns; j++)
+        {
+            if(copy.matrix[i][j] == ENEMY) {
+                if (isDirectionValid(&gameMap, i, j+1)) {
+                    moveInMap(&gameMap, i, j, i, j+1);
+                }
+            }
+        }        
+    }
+
+    freeMemory(&copy);    
 }
 
 int countLines(FILE* fp) { 
