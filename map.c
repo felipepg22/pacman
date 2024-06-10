@@ -89,7 +89,7 @@ void copyMap(MAP *origin, MAP *destination) {
     allocateMemory(destination);
     for (int i = 0; i < destination->lines; i++)
     {
-        strcpy(origin->matrix[i], destination->matrix[i]);
+        strcpy(destination->matrix[i], origin->matrix[i]);
     }
 }
 

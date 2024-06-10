@@ -35,7 +35,7 @@ int main() {
         char direction;
         scanf(" %c", &direction);
         move(&gameMap, &hero, direction);
-        //enemies();
+        enemies();
     
     } while (!endOfGame());
 
