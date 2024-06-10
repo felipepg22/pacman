@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
 #include "pacman.h"
 #include "file-helper.h"
 #include "map.h"
@@ -65,14 +66,44 @@ void enemies() {
         for (int j = 0; j < copy.columns; j++)
         {
             if(copy.matrix[i][j] == ENEMY) {
-                if (isDirectionValid(&gameMap, i, j+1)) {
-                    moveInMap(&gameMap, i, j, i, j+1);
+                int nextX;
+                int nextY;
+
+                int movementFound = chooseEnemyMovement(i, j, &nextX, &nextY);
+
+                if (movementFound) {
+                    moveInMap(&gameMap, i, j, nextX, nextY);
                 }
             }
         }        
     }
 
     freeMemory(&copy);    
+}
+
+int chooseEnemyMovement(int originX, int originY, int* nextX, int*nextY) {
+    int options[4][2] = {
+        {originX, originY + 1},
+        {originX, originY - 1},
+        {originX + 1, originY},
+        {originX - 1, originY}
+    };
+
+    srand(time(0));
+
+    int maxTries = 10;
+    for (int i = 0; i < maxTries; i++)
+    {
+        int direction = rand() % 4;
+
+        if (isDirectionValid(&gameMap, options[direction][0], options[direction][1])) {
+            *nextX = options[direction][0];
+            *nextY = options[direction][1];
+            return 1;
+        }
+    }
+
+    return 0;   
 }
 
 int countLines(FILE* fp) { 
