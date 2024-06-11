@@ -4,7 +4,7 @@
 #include "map.h"
 #include "pacman.h"
 
-
+int hasBomb = 0;
 void allocateMemory(MAP* map) {
     int memoryToAllocForLines = sizeof(int*) * map->lines;
     int memoryToAllocForColumns = sizeof(int) * map->columns;
@@ -16,10 +16,16 @@ void allocateMemory(MAP* map) {
     }
 }
 
-void move(MAP* map, POSITION* position, char direction) {
+void explodeBomb() {
+    if (hasBomb) {
+        printf("Exploded!\n");
+        hasBomb = 0;
+    }
+}
 
+void move(MAP* map, POSITION* position, char direction) {    
     char validLetters[4] = {UP, DOWN, RIGHT, LEFT};
-
+   
     if (!isValueInArray(direction, validLetters, 4)) return;
 
     int nextX = position->x;
@@ -41,6 +47,10 @@ void move(MAP* map, POSITION* position, char direction) {
     }
 
     if(!isDirectionValid(map, nextX, nextY, HERO)) return;
+
+    if (isCharacter(map, nextX, nextY, BOMB)) {
+        hasBomb = 1;
+    }
 
     moveInMap(map, position->x, position->y, nextX, nextY);
     position->x = nextX;
