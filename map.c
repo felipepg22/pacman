@@ -40,7 +40,7 @@ void move(MAP* map, POSITION* position, char direction) {
             break;
     }
 
-    if(!isDirectionValid(map, nextX, nextY)) return;
+    if(!isDirectionValid(map, nextX, nextY, HERO)) return;
 
     moveInMap(map, position->x, position->y, nextX, nextY);
     position->x = nextX;
@@ -53,24 +53,36 @@ void moveInMap(MAP *map, int originX, int originY, int nextX, int nextY) {
 	map->matrix[originX][originY] = EMPTY;
 }
 
-int isDirectionValid(MAP* map, int x, int y) {
-  if (x >= map->lines || y >= map->columns || map->matrix[x][y] != EMPTY) {
-    return 0;
-  }   
+int isDirectionValid(MAP* map, int x, int y, char character) {
+  return !isAWall(map, x, y)
+         && !isInLimit(map, x, y)
+         && !isCharacter(map, x, y, character);
+  }
 
-  return 1;
+int isInLimit(MAP* map, int x, int y ) {
+    return x >= map->lines || y >= map->columns;
 }
 
-void find(MAP* map, POSITION* position, char character) {
+int isAWall(MAP* map, int x, int y) {
+    return map->matrix[x][y] == HORIZONTAL_WALL || map->matrix[x][y] == VERTICAL_WALL;
+}
+
+int isCharacter(MAP* map, int x, int y, int character) {
+    return map->matrix[x][y] == character;
+}
+
+int find(MAP* map, POSITION* position, char character) {
     for (int i = 0; i <= map->lines; i++) {
         for (int j = 0; j <= map->columns; j++) {
             if (map->matrix[i][j] == character) {
                 position->x = i;
                 position->y = j;
-                break;
+                return 1;                
             }
         }        
     }
+
+    return 0;
 }
 
 int isValueInArray(char c, char validLetters[], int arraySize) {

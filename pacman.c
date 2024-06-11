@@ -44,7 +44,10 @@ int main() {
 }
 
 int endOfGame() {
-    return 0;
+    POSITION pos;  
+
+    int isHeroInMap = find(&gameMap, &pos, HERO);  
+    return !isHeroInMap;
 }
 
 void readFileForGameMap(FILE* file) {    
@@ -96,7 +99,7 @@ int chooseEnemyMovement(int originX, int originY, int* nextX, int*nextY) {
     {
         int direction = rand() % 4;
 
-        if (isDirectionValid(&gameMap, options[direction][0], options[direction][1])) {
+        if (isDirectionValid(&gameMap, options[direction][0], options[direction][1], ENEMY)) {
             *nextX = options[direction][0];
             *nextY = options[direction][1];
             return 1;
