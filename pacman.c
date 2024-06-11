@@ -27,15 +27,18 @@ int main() {
     
     do
     {           
-
+      
         for(int i = 0; i <= gameMap.lines; i++) {
             printf("%s\n", gameMap.matrix[i]);
         }
 
         char direction;
         scanf(" %c", &direction);
-        move(&gameMap, &hero, direction);
+        move(&gameMap, &hero, direction);       
         enemies();
+        if (direction == USE_BOMB) {
+            explodeBomb();
+        }
     
     } while (!endOfGame());
 
