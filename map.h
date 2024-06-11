@@ -27,3 +27,5 @@ int isAWall(MAP* map, int x, int y);
 int isCharacter(MAP* map, int x, int y, int character);
 void copyMap(MAP *source, MAP *destination);
 void freeMemory(MAP* map); 
+int countLines(FILE* fp);
+int countColumns(FILE* file, int numberOfLines);

@@ -4,7 +4,6 @@
 #include <string.h>
 #include <time.h>
 #include "pacman.h"
-#include "file-helper.h"
 #include "map.h"
 
 MAP gameMap;
