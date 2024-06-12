@@ -16,11 +16,20 @@ void allocateMemory(MAP* map) {
     }
 }
 
-void explodeBomb() {
-    if (hasBomb) {
-        printf("Exploded!\n");
-        hasBomb = 0;
+void explodeBomb(MAP* map, int x, int y, int quantity) {
+    if (!hasBomb) {
+        printf("You don't have a bomb!\n");   
+        return;    
     }
+
+    if (quantity == 0) {
+        hasBomb = 0;
+        return;
+    }
+
+    map->matrix[x][y+1] = EMPTY;
+
+    explodeBomb(map, x, y+1, quantity-1);
 }
 
 void move(MAP* map, POSITION* position, char direction) {    

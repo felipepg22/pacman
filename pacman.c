@@ -35,10 +35,10 @@ int main() {
         char direction;
         scanf(" %c", &direction);
         move(&gameMap, &hero, direction);       
-        enemies();
         if (direction == USE_BOMB) {
-            explodeBomb();
+            explodeBomb(&gameMap, hero.x, hero.y, 3);
         }
+        enemies();
     
     } while (!endOfGame());
 
