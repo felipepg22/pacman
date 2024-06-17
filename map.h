@@ -29,4 +29,5 @@ void copyMap(MAP *source, MAP *destination);
 void freeMemory(MAP* map); 
 int countLines(FILE* fp);
 int countColumns(FILE* file, int numberOfLines);
-void explodeBomb();
+void explodeBomb(MAP* map, POSITION* position);
+void explodeBombInDirections(MAP* map, int x, int y, int sumX, int sumY, int quantity);

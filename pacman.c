@@ -36,7 +36,7 @@ int main() {
         scanf(" %c", &direction);
         move(&gameMap, &hero, direction);       
         if (direction == USE_BOMB) {
-            explodeBomb(&gameMap, hero.x, hero.y, 3);
+            explodeBomb(&gameMap, &hero);
         }
         enemies();
     
