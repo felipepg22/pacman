@@ -17,6 +17,12 @@ void allocateMemory(MAP* map) {
 }
 
 void explodeBomb(MAP* map, POSITION* position) {
+
+    if (!hasBomb) {
+        printf("You don't have a bomb!\n");   
+        return;    
+    }
+
     explodeBombInDirections(map, position->x, position->y, 0, 1, 3);
     explodeBombInDirections(map, position->x, position->y, 0, -1, 3);
     explodeBombInDirections(map, position->x, position->y, 1, 0, 3);
@@ -25,10 +31,6 @@ void explodeBomb(MAP* map, POSITION* position) {
 }
 
 void explodeBombInDirections(MAP* map, int x, int y, int sumX, int sumY, int quantity) {
-    if (!hasBomb) {
-        printf("You don't have a bomb!\n");   
-        return;    
-    }
 
     int newX = x + sumX;
     int newY = y + sumY;
