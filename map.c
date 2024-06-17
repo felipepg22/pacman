@@ -22,7 +22,7 @@ void explodeBomb(MAP* map, int x, int y, int quantity) {
         return;    
     }
 
-    if (quantity == 0) {
+    if (quantity == 0 || isAWall(map, x, y+1) || isInLimit(map, x, y+1)) {
         hasBomb = 0;
         return;
     }
