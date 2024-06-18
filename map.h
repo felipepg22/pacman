@@ -1,3 +1,6 @@
+#ifndef _MAP_H_
+#define _MAP_H_
+
 #define EMPTY '.'
 #define VERTICAL_WALL '|'
 #define HORIZONTAL_WALL '-'
@@ -31,3 +34,5 @@ int countLines(FILE* fp);
 int countColumns(FILE* file, int numberOfLines);
 void explodeBomb(MAP* map, POSITION* position);
 void explodeBombInDirections(MAP* map, int x, int y, int sumX, int sumY, int quantity);
+
+#endif

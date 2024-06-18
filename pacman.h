@@ -1,3 +1,6 @@
+#ifndef _PACMAN_H_
+#define _PACMAN_H_
+
 #define UP 'w'
 #define DOWN 's'
 #define RIGHT 'd'
@@ -11,3 +14,5 @@ void readFileForGameMap();
 int endOfGame();
 void enemies();
 int chooseEnemyMovement(int originX, int originY, int* nextX, int*nextY);
+
+#endif

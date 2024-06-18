@@ -5,6 +5,7 @@
 #include <time.h>
 #include "pacman.h"
 #include "map.h"
+#include "ui.h"
 
 MAP gameMap;
 POSITION hero;
@@ -28,9 +29,7 @@ int main() {
     do
     {           
       
-        for(int i = 0; i <= gameMap.lines; i++) {
-            printf("%s\n", gameMap.matrix[i]);
-        }
+        printMap(&gameMap);
 
         char direction;
         scanf(" %c", &direction);
